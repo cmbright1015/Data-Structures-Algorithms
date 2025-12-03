@@ -6,21 +6,23 @@
 #include <sstream>
 #include <iomanip>
 #include <array>
+#include<cstdlib>
+#include<ctime>
 
 int main() {
     std::array<int, 3> sizes = {10, 100, 1000};
     const int numFiles = 25;
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<double> dist (-100.0, 100.0);
+    srand(static_cast<unsigned>(time(nullptr)));
 
     for (int n : sizes) {
         for (int i = 1; i <= numFiles; ++i) {
+            // builds the file names with the correct prefix
             std::ostringstream oss;
             oss << "Bright_Caleb_input_" << n << "_" << std::setw(2)
             << std::setfill('0') << i << ".txt";
 
+            // convert to string and open the file
             std::string fileName = oss.str();
             std::ofstream out(fileName);
 
@@ -30,7 +32,8 @@ int main() {
             }
 
             for (int j = 0; j < n; ++j) {
-                double value = dist(gen);
+                // convert to float in [-100,100] range
+                double value = ((double)rand() / RAND_MAX) * 200.0 - 100.0;
                 out << std::fixed << std::setprecision(6) << value;
                 if (j + 1 < n) {
                     out << ' ';
