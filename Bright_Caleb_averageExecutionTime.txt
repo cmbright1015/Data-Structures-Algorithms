@@ -1,0 +1,4 @@
+Input Size    Average Execution Time in Microseconds
+10    0
+100    3
+1000    42.8
