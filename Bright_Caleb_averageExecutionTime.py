@@ -1,8 +1,11 @@
+#Caleb Bright
 import matplotlib.pyplot as plt
 
 sizes = []
 times = []
 
+# read the .txt file, if it doesn't have 2 values ignore
+# convert to int and floats then store the values in their own list
 with open("Bright_Caleb_averageExecutionTime.txt") as f:
     next(f)
     for line in f:
