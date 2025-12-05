@@ -12,12 +12,15 @@ Bright_Caleb_QuickSort: Bright_Caleb_QuickSort.cpp
 Bright_Caleb_InputFileGenerator: Bright_Caleb_InputFileGenerator.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $<
 
+Bright_Caleb_automated: Bright_Caleb_automated.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
 
 clean:
 	rm -f $(TARGETS) *.o
 
 wipe:
 	rm -f Bright_Caleb_input_*.txt Bright_Caleb_output_*.txt
+	rm -f Bright_Caleb_executionTime.txt Bright_Caleb_averageExecutionTime.txt
 
 reset: clean wipe
 
