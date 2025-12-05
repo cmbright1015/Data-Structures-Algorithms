@@ -1,3 +1,4 @@
+// Caleb Bright
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -71,17 +72,22 @@ void quickSort(std::vector<double> &a, int left, int right) {
 }
 
 int main() {
+
     std::vector<int> sizes = {10, 100, 1000};
+    // open the txt file so all times can be recorded
     std::ofstream execution_time("Bright_Caleb_executionTime.txt");
-    execution_time << "InputSize\tExecution Time in Microseconds\n";
+    execution_time << "Input Size\tExecution Time in Microseconds\n";
 
     for (int size : sizes) {
+    		// for loop loops 25 times for each 10, 100, 1000 and it builds the file names for input and output
+    		// had to add the std::setw(2) and setfill('0') because the program wasn't reading the files with leading zeros
         for (int i = 1; i <= 25; ++i) {
             std::stringstream input_name;
-            input_name << "Bright_Caleb_input_" << size << "_" << i << ".txt";
+            input_name << "Bright_Caleb_input_" << size << "_" << std::setw(2) << std::setfill('0') << i << ".txt";
             std::stringstream output_name;
-            output_name << "Bright_Caleb_output_" << size << "_" << i << ".txt";
+            output_name << "Bright_Caleb_output_" << size << "_" << std::setw(2) << std::setfill('0') << i << ".txt";
 
+		// opens the file for data sorting
             std::ifstream inFile(input_name.str());
             if (!inFile) {
                 std::cerr << "Error opening file '" << input_name.str() << "'.\n";
@@ -91,16 +97,18 @@ int main() {
             std::vector<double> data;
             double value;
 
-            while (input_name >> value) {
+            while (inFile >> value) {
                 data.push_back(value);
             }
             inFile.close();
 
+		// if not eof error, something needs to change
             if (!inFile.eof()) {
                 std::cerr << "Failed reading file '" << input_name.str() << "'.\n";
                 continue;
             }
 
+		// execution time for sorting
             auto start_clock = std::chrono::high_resolution_clock::now();
             if (!data.empty()) {
                 quickSort(data, 0, static_cast<int>(data.size()) - 1);
@@ -108,6 +116,7 @@ int main() {
             auto end_clock = std::chrono::high_resolution_clock::now();
             auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(end_clock - start_clock).count();
             
+            // output file for sorted data
             std::ofstream outFile(output_name.str());
             if (!outFile) {
                 std::cerr << "Error opening file '" << output_name.str() << "'.\n";
@@ -128,6 +137,7 @@ int main() {
 
     execution_time.close();
 
+	// so the average time can be taken from the executiontime.txt file
     std::ifstream exTimeFile("Bright_Caleb_executionTime.txt");
     std::ofstream averageTime("Bright_Caleb_averageExecutionTime.txt");
 
@@ -135,6 +145,8 @@ int main() {
     std::string header;
     std::getline(exTimeFile, header);
 
+
+	// avergaes for each size
     for (int size : sizes) {
         exTimeFile.clear();
         exTimeFile.seekg(0);
